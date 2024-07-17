@@ -70,7 +70,7 @@ private:
         }
 
         // TODO: Add a parameter if it should be inflated
-        // octomap_utils::inflateFreeSpaces(octree_occupied); 
+        octomap_utils::inflateFreeSpaces(octree_occupied); 
 
 
         // Konvertiere die Octomap zurück in eine ROS-Nachricht
@@ -86,21 +86,24 @@ private:
     }
 
 
-
     void checkAndAddFreeVoxelsAbove(octomap::OcTree* octree, const octomap::OcTreeKey& key)
     {
         octomap::OcTreeKey key_above1 = key;
         key_above1[2] += 1; // Ein Voxel über dem aktuellen Voxel
         octomap::OcTreeKey key_above2 = key;
         key_above2[2] += 2; // Zwei Voxel über dem aktuellen Voxel
+        octomap::OcTreeKey key_above3 = key;
+        key_above3[2] += 3; // Zwei Voxel über dem aktuellen Voxel
 
 
 
         octomap::OcTreeNode* node_above1 = octree->search(key_above1);
         octomap::OcTreeNode* node_above2 = octree->search(key_above2);
+        octomap::OcTreeNode* node_above3 = octree->search(key_above3);
 
         bool is_free1 = node_above1 && !octree->isNodeOccupied(node_above1);
         bool is_free2 = node_above2 && !octree->isNodeOccupied(node_above2);
+        bool is_free3 = node_above3 && !octree->isNodeOccupied(node_above3);
 
 
         if (!is_free1)
@@ -113,6 +116,10 @@ private:
             octree->updateNode(key_above2, false); // Setze als 'free'
         }
 
+        if (!is_free3)
+        {
+            octree->updateNode(key_above3, false); // Setze als 'free'
+        }
 
     }
 

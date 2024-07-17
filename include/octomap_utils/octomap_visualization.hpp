@@ -58,7 +58,6 @@ visualization_msgs::msg::MarkerArray octomapToMarkerArray(const octomap::OcTree&
     }
 
     return marker_array;
-
 }
 
 

@@ -14,14 +14,18 @@ find_package(visualization_msgs REQUIRED)
 
 
 # Include directories
-include_directories(include)
-
+#include_directories(include)
+include_directories(
+  include
+  ${octomap_msgs_INCLUDE_DIRS}
+  /opt/ros/humble/include
+)
 
 
 ### ROS2 Node: OctoMapHeightModNode
 
 add_executable(OctoMapHeightModNode src/OctoMapHeightModNode.cpp)
-
+target_link_libraries(OctoMapHeightModNode ${octomap_msgs_LIBRARIES})
 ament_target_dependencies(OctoMapHeightModNode
   rclcpp
   std_msgs
@@ -40,7 +44,7 @@ install(TARGETS
 ### ROS2 Node: OctomapMockupPublisherNode
 
 add_executable(OctomapMockupPublisherNode src/OctomapMockupPublisherNode.cpp)
-
+target_link_libraries(OctomapMockupPublisherNode ${octomap_msgs_LIBRARIES})
 ament_target_dependencies(OctomapMockupPublisherNode
   rclcpp
   octomap_msgs
