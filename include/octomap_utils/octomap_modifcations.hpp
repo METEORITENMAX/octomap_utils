@@ -36,7 +36,7 @@ void inflateFreeSpaces(std::shared_ptr<octomap::OcTree> tree)
 {
     std::vector<octomap::point3d> toUpdate;
     const double resolution = tree->getResolution();  // The resolution of the OcTree
-    const double inflation_radius = 0.1;  // The radius within which to inflate free voxels
+    const double inflation_radius = 0.05;  // The radius within which to inflate free voxels
     const double step_size = 0.02;  // The step size for inflation
 
     for (octomap::OcTree::leaf_iterator it = tree->begin_leafs(), end = tree->end_leafs(); it != end; ++it) {

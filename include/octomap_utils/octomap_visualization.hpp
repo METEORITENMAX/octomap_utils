@@ -42,7 +42,7 @@ visualization_msgs::msg::MarkerArray octomapToMarkerArray(const octomap::OcTree&
             marker.color.r = 0.0; // Set marker color (red)
             marker.color.g = 1.0;
             marker.color.b = 0.0;
-
+           // marker_array.markers.push_back(marker);
         } else {
 
             marker.color.a = 0.5;
