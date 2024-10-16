@@ -11,7 +11,7 @@ namespace octomap_utils {
 
 
 
-visualization_msgs::msg::MarkerArray octomapToMarkerArray(const octomap::OcTree& octomap_tree) {
+visualization_msgs::msg::MarkerArray octomapToMarkerArray(const octomap::OcTree& octomap_tree, std::vector<octomap::OcTreeKey>& collision_nodes) {
 
     visualization_msgs::msg::MarkerArray marker_array;
 
@@ -36,16 +36,25 @@ visualization_msgs::msg::MarkerArray octomapToMarkerArray(const octomap::OcTree&
 
         // if (octomap_tree.isNodeOccupied(*it)) {
         double occupancy = it->getOccupancy();
-        if (occupancy > octomap_tree.getOccupancyThres()) {
 
-            marker.color.a = 0.5; // Set marker alpha (transparency)
+        auto collision_it = std::find(collision_nodes.begin(), collision_nodes.end(), it.getKey());
+
+        if (collision_it != collision_nodes.end()) {
+            marker.color.a = 0.75; // Set
+            marker.color.r = 1.0; //
+            marker.color.g = 1.0;
+            marker.color.b = 0.0;
+        }
+        else if (occupancy > octomap_tree.getOccupancyThres()) {
+
+            marker.color.a = 0.25; // Set marker alpha (transparency)
             marker.color.r = 0.0; // Set marker color (red)
             marker.color.g = 1.0;
             marker.color.b = 0.0;
            // marker_array.markers.push_back(marker);
         } else {
 
-            marker.color.a = 0.5;
+            marker.color.a = 0.25;
             marker.color.r = 1.0;
             marker.color.g = 0.0;
             marker.color.b = 0.0;
